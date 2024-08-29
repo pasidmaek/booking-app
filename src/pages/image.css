@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4%;
+  justify-content: space-between;
+}
+
+.container>img {
+  height: 150px;
+  object-fit: cover;
+  width: auto;
+  max-width: calc(33.33% - 8px);
+}
