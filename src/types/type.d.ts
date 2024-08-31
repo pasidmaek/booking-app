@@ -6,3 +6,11 @@ type ImageType = {
   url: string,
   download_url: string
 }
+
+type RoomType = {
+  id: number,
+  roomId: string,
+  startTime: string,
+  endTime: string,
+  title: string
+}

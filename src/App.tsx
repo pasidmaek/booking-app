@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import Image from './pages/Image';
-import Booking from './pages/booking';
-import Modal from './component/modal';
-import Room from './pages/room';
+import Image from './pages/image/Image';
+import Booking from './pages/booking/booking';
+import Modal from './component/modal/modal';
+import Room from './pages/room/room';
 
 function App() {
   const location = useLocation();
@@ -20,8 +20,8 @@ function App() {
       </Routes>
       {previousLocation && (
         <Routes>
-          <Route path="/booking/:weekNo" element={<Modal type={'book'}/>} />
-          <Route path="/room/:weekNo" element={<Modal type={'room'}/>} />
+          <Route path="/booking/:weekNo" element={<Modal />} />
+          <Route path="/room/:weekNo" element={<Modal />} />
         </Routes>
       )}
     </div>

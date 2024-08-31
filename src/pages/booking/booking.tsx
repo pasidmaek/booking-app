@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
-import bookingData from '../data/booking-data.json'
+import bookingData from '../../data/booking-data.json'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function Booking() {
+  //TODO: make assign 3
   const location = useLocation()
   const navigate = useNavigate()
   const roomBooking = Array.from(new Set(bookingData.map(room => room.roomId)));
