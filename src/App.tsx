@@ -5,6 +5,7 @@ import Image from './pages/image/Image';
 import Booking from './pages/booking/booking';
 import Modal from './component/modal/modal';
 import Room from './pages/room/room';
+import Home from './pages/home/home';
 
 function App() {
   const location = useLocation();
@@ -13,6 +14,7 @@ function App() {
   return (
     <div className="App">
       <Routes location={previousLocation || location}>
+        <Route path='/' element={<Home />} />
         <Route path='/image' element={<Image />} />
         <Route path='/booking' element={<Booking />} />
         <Route path='/room' element={<Room />} />
@@ -21,7 +23,6 @@ function App() {
       {previousLocation && (
         <Routes>
           <Route path="/booking/:weekNo" element={<Modal />} />
-          <Route path="/room/:weekNo" element={<Modal />} />
         </Routes>
       )}
     </div>

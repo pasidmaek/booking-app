@@ -3,13 +3,11 @@ import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { TextField } from '@mui/material';
-
 import './room.css'
-
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { getBookingsForWeek, checkAvailability } from '../../services/check';
+import { DatePicker } from '@mui/x-date-pickers';
 
 function Room() {
   const [startDate, setStartDate] = useState<Dayjs>(dayjs(new Date()));
@@ -17,6 +15,8 @@ function Room() {
   const [selectedRoom, setSelectedRoom] = useState<'A101' | 'A102' | 'Auditorium'>('A101');
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
 
+  const [selectedBookRoom, setSelectedBookRoom] = useState<'A101' | 'A102' | 'Auditorium'>('A101');
+  const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs(new Date()));
   const [selectedWeek, setSelectedWeek] = useState<'today' | 't-week' | 'n-week'>('today');
   const [booking, setBooking] = useState<RoomType[] | null>(null);
 
@@ -32,25 +32,27 @@ function Room() {
   const handleRoomAlignment = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: 'A101' | 'A102' | 'Auditorium' | null,
+    type: 'available' | 'book'
   ) => {
     if (newAlignment !== null) {
-      setSelectedRoom(newAlignment);
+      type === 'available' ? setSelectedRoom(newAlignment) : setSelectedBookRoom(newAlignment)
     }
   };
 
   useEffect(() => {
-    const roomBooking = getBookingsForWeek('A101', selectedWeek)
-    setBooking(roomBooking)
-  }, [selectedWeek])
+    const isRoomAvailable = checkAvailability(selectedRoom, startDate?.toDate(), endDate?.toDate() ?? startDate?.toDate())
+    setIsAvailable(isRoomAvailable)
+  }, [startDate, endDate, selectedRoom])
 
   useEffect(() => {
-    const isRoomAvailable = checkAvailability(selectedRoom, startDate?.toString(), endDate?.toString() ?? startDate?.toString())
-    setIsAvailable(isRoomAvailable)
-  }, [startDate, endDate])
+    const roomBooking = getBookingsForWeek(selectedBookRoom, selectedDate?.toDate(), selectedWeek)
+    console.log(roomBooking)
+    setBooking(roomBooking)
+  }, [selectedWeek, selectedDate, selectedBookRoom])
 
   return (
-    <>
-      <>
+    <div className='room-container'>
+      <div className='input-container'>
         <h1>Check room available</h1>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateTimePicker
@@ -72,7 +74,7 @@ function Room() {
         <ToggleButtonGroup
           value={selectedRoom}
           exclusive
-          onChange={handleRoomAlignment}
+          onChange={(event, newValue) => handleRoomAlignment(event, newValue, 'available')}
           aria-label="text alignment"
         >
           <ToggleButton value="A101" aria-label="left aligned">
@@ -85,12 +87,36 @@ function Room() {
             Auditorium
           </ToggleButton>
         </ToggleButtonGroup>
-        <p>
+        <h3>
           {`${selectedRoom} ${isAvailable}`}
-        </p>
-      </>
-      <>
+        </h3>
+      </div>
+      <div className='input-container'>
         <h1>Check room booked</h1>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Select Date"
+            value={selectedDate}
+            onChange={(newValue) => setSelectedDate(newValue ?? dayjs(new Date()))}
+            sx={{ marginBottom: 2 }}
+          />
+        </LocalizationProvider>
+        <ToggleButtonGroup
+          value={selectedBookRoom}
+          exclusive
+          onChange={(event, newValue) => handleRoomAlignment(event, newValue, 'book')}
+          aria-label="text alignment"
+        >
+          <ToggleButton value="A101" aria-label="left aligned">
+            A101
+          </ToggleButton>
+          <ToggleButton value="A102" aria-label="centered">
+            A102
+          </ToggleButton>
+          <ToggleButton value="Auditorium" aria-label="right aligned">
+            Auditorium
+          </ToggleButton>
+        </ToggleButtonGroup>
         <ToggleButtonGroup
           value={selectedWeek}
           exclusive
@@ -114,12 +140,12 @@ function Room() {
               <p>No room was booked</p>
               :
               booking.map((room: RoomType) => (
-                <p>{room.roomId}</p>
+                <p key={room.id}>{room.title}</p>
               ))
           )
         }
-      </>
-    </>
+      </div>
+    </div >
   );
 }
 

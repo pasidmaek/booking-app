@@ -3,30 +3,31 @@ import bookingData from '../../data/booking-data.json'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function Booking() {
-  //TODO: make assign 3
   const location = useLocation()
-  const navigate = useNavigate()
   const roomBooking = Array.from(new Set(bookingData.map(room => room.roomId)));
 
-  const handleOpenModal = (room: string) => {
-    console.log('click room')
-    navigate(`/booking/today?roomId=${room}`);
-  };
-
   return (
-    <div className=''>
-      {roomBooking.map((room) => (
-        // <button key={room} onClick={() => handleOpenModal(room)}>{room}</button>
-        <Link
-          // className="frontpage-job"
-          to={`/today?roomId=${room}`}
-          state={{ previousLocation: location }}
-        >
-          {room}
-        </Link>
-      ))}
+    <div>
+      <Link
+        className="back-btn"
+        to={location.state?.from}
+      >
+        Back
+      </Link>
+      {
+        roomBooking.map((room) => (
+          <Link
+            // className="frontpage-job"
+            to={`/booking/today?roomId=${room}`}
+            state={{ previousLocation: location }}
+            key={room}
+          >
+            {room}
+          </Link>
+        ))
+      }
 
-    </div>
+    </div >
   )
 }
 
