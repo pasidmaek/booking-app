@@ -12,7 +12,7 @@ const checkAvailability = (roomId: string, startTime: Date, endTime: Date) => {
 const getBookingsForWeek = (roomId: string, selectedDate: Date, weekNo: 'today' | 't-week' | 'n-week' | 'w-month') => {
   const today = selectedDate ?? new Date()
   today.setHours(0, 0, 0, 0);
-  console.log("-------------------------------")
+  // console.log("-------------------------------")
 
   switch (weekNo) {
     case 'today':
@@ -33,13 +33,13 @@ const getBookingsForWeek = (roomId: string, selectedDate: Date, weekNo: 'today' 
       const startOfWeek = new Date(today);
       startOfWeek.setDate(today.getDate() - today.getDay());
       startOfWeek.setHours(0, 0, 0, 0);
-      console.log("STARTWEEK", startOfWeek)
+      // console.log("STARTWEEK", startOfWeek)
 
       //set to saturday
       const endOfWeek = new Date(startOfWeek);
       endOfWeek.setDate(startOfWeek.getDate() + 6);
       endOfWeek.setHours(23, 59, 59, 999);
-      console.log("ENDWEEK", endOfWeek)
+      // console.log("ENDWEEK", endOfWeek)
 
       return bookingData.filter((booking) => {
         const bookingStart = new Date(booking.startTime);
@@ -55,12 +55,12 @@ const getBookingsForWeek = (roomId: string, selectedDate: Date, weekNo: 'today' 
       const startOfNextWeek = new Date(today);
       startOfNextWeek.setDate(today.getDate() - today.getDay() + 7);
       startOfNextWeek.setHours(0, 0, 0, 0);
-      console.log("STARTWEEK", startOfNextWeek)
+      // console.log("STARTWEEK", startOfNextWeek)
 
       const endOfNextWeek = new Date(startOfNextWeek);
       endOfNextWeek.setDate(startOfNextWeek.getDate() + 6);
       endOfNextWeek.setHours(23, 59, 59, 999);
-      console.log("ENDWEEK", endOfNextWeek)
+      // console.log("ENDWEEK", endOfNextWeek)
 
       return bookingData.filter((booking) => {
         const bookingStart = new Date(booking.startTime);
@@ -75,11 +75,11 @@ const getBookingsForWeek = (roomId: string, selectedDate: Date, weekNo: 'today' 
     case 'w-month':
       const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
       startOfMonth.setHours(0, 0, 0, 0);
-      console.log("STARTMONTH", startOfMonth)
+      // console.log("STARTMONTH", startOfMonth)
 
       const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
       endOfMonth.setHours(23, 59, 59, 999);
-      console.log("ENDMONTH", endOfMonth)
+      // console.log("ENDMONTH", endOfMonth)
 
       return bookingData.filter((booking) => {
         const bookingStart = new Date(booking.startTime);

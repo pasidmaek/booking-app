@@ -20,11 +20,15 @@ function App() {
         <Route path='/room' element={<Room />} />
         {/* <Route path="*" element={<NoMatch />} /> */}
       </Routes>
-      {previousLocation && (
+      {previousLocation ? (
         <Routes>
           <Route path="/booking/:weekNo" element={<Modal />} />
         </Routes>
-      )}
+      ) :
+        <Routes>
+          <Route path="/booking/:weekNo" element={<Modal />} />
+        </Routes>
+      }
     </div>
   );
 }

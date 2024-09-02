@@ -5,7 +5,8 @@ import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'reac
 import dayjs, { Dayjs } from 'dayjs';
 import { getBookingsForWeek } from '../../services/check';
 import BookingCard from '../bookingCard/BookingCard';
-import { CircularProgress } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 function Modal() {
   const location = useLocation()
@@ -15,7 +16,6 @@ function Modal() {
   const [searchParams] = useSearchParams();
   const roomId = searchParams.get('roomId');
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs(new Date('Sun Sep 28 2019 00:00:00 GMT+0700 ')));
-  const [booking, setBooking] = useState<RoomType[] | null>(null);
   const [bookingDate, setBookingDate] = useState<{ [date: string]: RoomType[] } | null>(null);
   const [sortedDates, setSortedDates] = useState<string[] | null>(null);
   const [todayBooking, setTodayBooking] = useState<RoomType[] | null>(null);
@@ -38,7 +38,6 @@ function Modal() {
     const groupedBookings = groupBookingsByDate(roomBooking);
     const sortedDates = Object.keys(groupedBookings).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
-    setBooking(roomBooking)
     setBookingDate(groupedBookings);
     setSortedDates(sortedDates);
   }, [weekNo, roomId, selectedDate])
@@ -71,38 +70,46 @@ function Modal() {
           <p style={{
             fontSize: '14px'
           }}>upcoming</p>
-          <h1 className='font' style={{ fontWeight: 'lighter' }}>{Time.Date[date.getDay()]}</h1>
-          <h1 className='font' style={{ fontWeight: 'normal', marginBottom: '20%' }}>{`${date.getDate()} ${Time.ShortMonth[date.getMonth()]}`}</h1>
-          {
-            todayBooking &&
-            (
-              todayBooking.length === 0 ?
-                <p>No room was booked</p>
-                :
-                todayBooking.map((room: RoomType) => (
-                  <BookingCard data={room} key={room.id} />
-                ))
-            )
-          }
+          <div className='today-container'>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                value={selectedDate}
+                onChange={(newValue) => setSelectedDate(newValue ?? dayjs(new Date()))}
+              />
+            </LocalizationProvider>
+            <h1 className='font' style={{ fontWeight: 'lighter' }}>{Time.Date[selectedDate.get('day')]}</h1>
+            <h1 className='font' style={{ fontWeight: 'normal', marginBottom: '20%' }}>{`${selectedDate.get('D')} ${Time.ShortMonth[selectedDate.get('M')]}`}</h1>
+            {
+              todayBooking &&
+              (
+                todayBooking.length === 0 ?
+                  <p>No room was booked</p>
+                  :
+                  todayBooking.map((room: RoomType) => (
+                    <BookingCard data={room} key={room.id} />
+                  ))
+              )
+            }
+          </div>
         </div>
-        <div>
-          <div>
+        <div className='plan'>
+          <div className='week-container'>
             <Link
-              // className="frontpage-job"
+              className={`week ${weekNo === 'thisweek' ? 'active' : ''}`}
               to={`/booking/thisweek?roomId=${roomId}`}
               state={{ previousLocation: location }}
             >
               This Week
             </Link>
             <Link
-              // className="frontpage-job"
+              className={`week ${weekNo === 'nextweek' ? 'active' : ''}`}
               to={`/booking/nextweek?roomId=${roomId}`}
               state={{ previousLocation: location }}
             >
               Next Week
             </Link>
             <Link
-              // className="frontpage-job"
+              className={`week ${weekNo === 'wholemonth' ? 'active' : ''}`}
               to={`/booking/wholemonth?roomId=${roomId}`}
               state={{ previousLocation: location }}
             >
@@ -112,7 +119,7 @@ function Modal() {
           {
             bookingDate && sortedDates ? (
               sortedDates.length === 0 ? (
-                <p>No Booking</p>
+                <p className='text-error'>No Booking</p>
               ) : (
                 sortedDates.map(date => (
                   <div key={date}>
@@ -120,14 +127,14 @@ function Modal() {
                     {bookingDate[date].map((room: RoomType) => (
                       <div className='activity'>
                         <div className='circle' />
-                        <BookingCard key={room.id} data={room} style={{ marginLeft: '20%' }} />
+                        <BookingCard key={room.id} data={room} style={{ marginLeft: '5%' }} />
                       </div>
                     ))}
                   </div>
                 ))
               )
             ) : (
-              <p>Loading...</p>
+              <p className='text-error'>Loading...</p>
             )
           }
         </div>

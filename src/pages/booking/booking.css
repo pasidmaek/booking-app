@@ -2,6 +2,8 @@
   background-color: '#2EBAEE';
 }
 
-.back-btn {
-  border: 1px solid black;
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4;
 }

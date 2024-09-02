@@ -7,26 +7,27 @@ function Booking() {
   const roomBooking = Array.from(new Set(bookingData.map(room => room.roomId)));
 
   return (
-    <div>
+    <div className='App-header'>
       <Link
-        className="back-btn"
-        to={location.state?.from}
+        className="btn btn-radius"
+        to={'/'}
       >
-        Back
+        Back to Home
       </Link>
-      {
-        roomBooking.map((room) => (
-          <Link
-            // className="frontpage-job"
-            to={`/booking/today?roomId=${room}`}
-            state={{ previousLocation: location }}
-            key={room}
-          >
-            {room}
-          </Link>
-        ))
-      }
-
+      <div className='btn-container'>
+        {
+          roomBooking.map((room) => (
+            <Link
+              className="btn btn-radius"
+              to={`/booking/thisweek?roomId=${room}`}
+              state={{ previousLocation: location }}
+              key={room}
+            >
+              {room}
+            </Link>
+          ))
+        }
+      </div>
     </div >
   )
 }

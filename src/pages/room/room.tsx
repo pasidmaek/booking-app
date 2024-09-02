@@ -8,6 +8,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { getBookingsForWeek, checkAvailability } from '../../services/check';
 import { DatePicker } from '@mui/x-date-pickers';
+import { Link } from 'react-router-dom';
 
 function Room() {
   const [startDate, setStartDate] = useState<Dayjs>(dayjs(new Date()));
@@ -46,12 +47,13 @@ function Room() {
 
   useEffect(() => {
     const roomBooking = getBookingsForWeek(selectedBookRoom, selectedDate?.toDate(), selectedWeek)
-    console.log(roomBooking)
+    // console.log(roomBooking)
     setBooking(roomBooking)
   }, [selectedWeek, selectedDate, selectedBookRoom])
 
   return (
     <div className='room-container'>
+      <Link to={'/'} className='btn' style={{ margin: '2% 0 0 4%' }}>Back</Link >
       <div className='input-container'>
         <h1>Check room available</h1>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
