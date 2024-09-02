@@ -1,0 +1,19 @@
+.btn {
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.btn-container {
+  padding: 10%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 4px;
+}

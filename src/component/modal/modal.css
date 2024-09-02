@@ -1,0 +1,96 @@
+.modal-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  padding: 40px;
+  background-color: rgba(117, 117, 117, 0.8);
+}
+
+.modal {
+  display: flex;
+  background-color: white;
+  width: 90vw;
+  height: 90vh;
+  flex-direction: row;
+}
+
+.info {
+  background-color: #4D59A1;
+  color: white;
+  width: 30%;
+  padding: 0 0 0 4%;
+}
+
+.room-header {
+  color: white;
+  background-color: #2EBAEE;
+  padding: 0 0 0 8%;
+  display: flex;
+  align-items: end;
+  height: 80px;
+}
+
+.room-header>h2 {
+  margin: 0;
+}
+
+.today-container {
+  padding: 0 4% 0 0;
+}
+
+.date-header {
+  padding: 10px 11%;
+  font-weight: 600;
+  background-color: rgba(197, 197, 197, 0.438);
+  color: rgb(112, 112, 112);
+}
+
+.activity {
+  display: flex;
+  flex-direction: row;
+  padding: 0 5%;
+  align-items: baseline;
+}
+
+.plan {
+  width: 70%;
+}
+
+.week-container {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  padding: 0 0 0 5%;
+  align-items: end;
+  background-color: rgba(194, 194, 194, 0.438);
+  height: 80px;
+}
+
+.week {
+  margin-top: 3%;
+  color: gray;
+  text-decoration: none;
+}
+
+.active {
+  color: black;
+  font-weight: 700;
+  border-bottom: 3px solid #2EBAEE;
+}
+
+.circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50px;
+  background-color: black;
+}
+
+.font {
+  margin: 0;
+  padding: 0;
+}
+
+.text-error {
+  margin: 4% 0 0 5%
+}

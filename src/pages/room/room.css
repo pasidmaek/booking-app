@@ -1,0 +1,24 @@
+.room-container {
+  padding: 4%;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.room-avai {}
+
+.book- {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  padding: 40px;
+  justify-content: space-between;
+}

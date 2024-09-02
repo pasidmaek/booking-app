@@ -1,0 +1,9 @@
+.header {
+  background-color: '#2EBAEE';
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4;
+}
